@@ -8,21 +8,6 @@ This project collects security events from CyberArk Privileged Access Management
 - **Secure Delivery**: Supports SSL/TLS encrypted transmission to Logstash
 - **Configurable**: YAML-based configuration for easy customization
 - **Resilient**: Tracks last collected event to prevent data gaps
---------------------------------------------------------------- 
-
-## Project Structure
-cyberark-log/
-├── config/
-│   ├── config.yaml          # Configuration file
-│   └── ecs_mapping.yaml     # ECS field mappings
-├── src/
-│   ├── __init__.py
-│   ├── cyberark_client.py   # CyberArk API interactions
-│   ├── ecs_mapper.py        # ECS mapping logic
-│   ├── logstash_sender.py   # Logstash integration
-│   └── main.py             # Main application
-├── requirements.txt        # Python dependencies
-└── README.md
 
 ---------------------------------------------------------------
 ## Prerequisites
