@@ -1,0 +1,13 @@
+field_mappings:
+  - cyberark_field: "EventID"
+    ecs_field: "event.id"
+  - cyberark_field: "EventType"
+    ecs_field: "event.action"
+  - cyberark_field: "SourceIP"
+    ecs_field: "source.ip"
+  - cyberark_field: "SourceUserName"
+    ecs_field: "user.name"
+  - cyberark_field: "TargetUserName"
+    ecs_field: "user.target.name"
+  - cyberark_field: "Safe"
+    ecs_field: "cyberark.safe"

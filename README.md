@@ -10,33 +10,36 @@ This project collects logs from CyberArk Privileged Access Management (PAM), nor
 --------------------------------------------------------------- 
 
 ## Project Structure
-cyberark-log-pipeline/
-    ├── main.py                # Main script to run the pipeline
-    ├── config.py              # Configuration file
-    ├── fetcher/               # Module for fetching logs
-    │     └── cyberark_fetcher.py
-    ├── normalizer/            # Module for ECS normalization
-    │     └── ecs_normalizer.py
-    ├── utils/                 # Helper functions
-    │     └── file_writer.py
-    ├── requirements.txt       # Python dependencies
-    └── README.md
+cyberark-log/
+├── config/
+│   ├── config.yaml          # Configuration file
+│   └── ecs_mapping.yaml     # ECS field mappings
+├── src/
+│   ├── __init__.py
+│   ├── cyberark_client.py   # CyberArk API interactions
+│   ├── ecs_mapper.py        # ECS mapping logic
+│   ├── logstash_sender.py   # Logstash integration
+│   └── main.py             # Main application
+├── requirements.txt        # Python dependencies
+└── README.md
 
 ---------------------------------------------------------------
+## Prerequisites
+- Python 3.8+
+- CyberArk PAM with REST API access
+- Logstash instance (with TCP/HTTP input configured)
 
+---------------------------------------------------------------
 ## Setup Instructions
 1.Install dependencies:
 
     pip install -r requirements.txt
 
-2.Edit config.py:
+2.Edit the configuration files:
 
-    -Set CYBERARK_URL to your CyberArk API endpoint.
+        -config/config.yaml: Set your CyberArk PVWA URL and credentials
 
-    -Set API_TOKEN to your CyberArk API token.
-
-    -Set OUTPUT_FILE to the desired JSON output path.
-
+        -config/ecs_mapping.yaml: Customize field mappings as needed
 3.run
    
-     python main.py
+    python -m src.main

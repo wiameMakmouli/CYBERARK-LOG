@@ -1,0 +1,17 @@
+cyberark:
+  pvwa_url: "https://your-cyberark-server.com"
+  api_path: "/PasswordVault/api"
+  username: "api_user"
+  password: "your_password"  
+  verify_ssl: true
+
+logstash:
+  host: "your-logstash-server.com"
+  port: 5044
+  use_ssl: true
+  ssl_verify: false
+
+settings:
+  polling_interval: 300  # 5 minutes
+  max_events_per_poll: 1000
+  initial_lookback_hours: 24
