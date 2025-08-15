@@ -1,12 +1,13 @@
-This project collects logs from CyberArk Privileged Access Management (PAM), normalizes them to **Elastic Common Schema (ECS)**, and prepares them for ingestion into **Logstash / Elasticsearch**.  
+This project collects security events from CyberArk Privileged Access Management (PAM), transforms them to **Elastic Common Schema (ECS)**, and sends them to **Logstash** for ingestion into Elasticsearch. 
 
 -------------------------------------------------------------
 
 ## Features
-- Fetch audit logs from CyberArk via REST API.
-- Normalize logs to ECS (`@timestamp`, `event`, `user`, `host`, `source`).
-- Save logs as JSON for Logstash ingestion.
-
+- **Automated Log Collection**: Fetches security events via CyberArk REST API
+- **ECS Normalization**: Converts raw logs to Elastic Common Schema format
+- **Secure Delivery**: Supports SSL/TLS encrypted transmission to Logstash
+- **Configurable**: YAML-based configuration for easy customization
+- **Resilient**: Tracks last collected event to prevent data gaps
 --------------------------------------------------------------- 
 
 ## Project Structure
