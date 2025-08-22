@@ -1,4 +1,5 @@
 import yaml
+import json
 import time
 import logging
 from pathlib import Path
@@ -16,29 +17,41 @@ def load_config():
     with open(Path(__file__).parent.parent / "config/config.yaml") as f:
         return yaml.safe_load(f)
 
-def main():
+def main(test_mode=False, fake_file="data/fake_psm_events.json"):
     setup_logging()
     logger = logging.getLogger(__name__)
     config = load_config()
 
-    cyberark = CyberArkClient(config)
     mapper = ECSMapper(Path(__file__).parent.parent / "config/ecs_mapping.yaml")
     logstash = LogstashSender(config)
 
-    logger.info("Starting CyberArk Log Collector")
-    try:
-        while True:
-            events = cyberark.get_security_events()
-            if events:
-                logger.info(f"Processing {len(events)} events")
-                for event in events:
-                    ecs_event = mapper.map_to_ecs(event)
-                    if not logstash.send(ecs_event):
-                        logger.error(f"Failed to send event: {event.get('EventID')}")
-            
-            time.sleep(config['settings']['polling_interval'])
-    except KeyboardInterrupt:
-        logger.info("Shutting down")
+    if test_mode:
+        logger.info(f"Loading fake events from {fake_file}")
+        try:
+            with open(fake_file) as f:
+                events = json.load(f)
+            for event in events:
+                ecs_event = mapper.map_to_ecs(event)
+                if not logstash.send(ecs_event):
+                    logger.error(f"Failed to send event: {event.get('EventID')}")
+            logger.info("Finished sending fake events")
+        except FileNotFoundError:
+            logger.error(f"Fake events file not found: {fake_file}")
+    else:
+        cyberark = CyberArkClient(config)
+        logger.info("Starting CyberArk Log Collector")
+        try:
+            while True:
+                events = cyberark.get_security_events()
+                if events:
+                    logger.info(f"Processing {len(events)} events")
+                    for event in events:
+                        ecs_event = mapper.map_to_ecs(event)
+                        if not logstash.send(ecs_event):
+                            logger.error(f"Failed to send event: {event.get('EventID')}")
+                time.sleep(config['settings']['polling_interval'])
+        except KeyboardInterrupt:
+            logger.info("Shutting down")
 
 if __name__ == "__main__":
-    main()
+     main(test_mode=True)

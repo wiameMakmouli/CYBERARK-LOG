@@ -11,3 +11,5 @@ field_mappings:
     ecs_field: "user.target.name"
   - cyberark_field: "Safe"
     ecs_field: "cyberark.safe"
+  - cyberark_field: "DeviceName"
+    ecs_field: "host.name"
