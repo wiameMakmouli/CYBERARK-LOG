@@ -54,4 +54,12 @@ def main(test_mode=False, fake_file="data/fake_psm_events.json"):
             logger.info("Shutting down")
 
 if __name__ == "__main__":
+<<<<<<< HEAD
      main(test_mode=True)
+=======
+    # Mode test avec événements fictifs
+    main(test_mode=True)
+
+    # Mode production avec CyberArk
+    #main()
+>>>>>>> ac32c0d (..)
